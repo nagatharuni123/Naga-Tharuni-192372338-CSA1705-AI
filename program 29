@@ -1,0 +1,27 @@
+% Facts: Initial knowledge base
+fact(weather_is_rainy).
+fact(have_umbrella).
+fact(wet_ground).
+
+% Rules: Deriving new facts based on existing ones
+infer(will_get_wet) :-
+    fact(weather_is_rainy),
+    \+ fact(have_umbrella),
+    assert(fact(will_get_wet)).
+
+infer(ground_is_slippery) :-
+    fact(wet_ground),
+    assert(fact(ground_is_slippery)).
+
+infer(need_raincoat) :-
+    fact(weather_is_rainy),
+    assert(fact(need_raincoat)).
+
+% Forward chaining execution: Applies all inference rules
+forward_chain :-
+    infer(will_get_wet),
+    infer(ground_is_slippery),
+    infer(need_raincoat).
+
+% Query to check deduced facts
+query(Fact) :- fact(Fact).
