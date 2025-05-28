@@ -1,0 +1,11 @@
+% Base case: Moving a single disk
+move(1, Source, Destination, _) :-
+    format('Move disk from ~w to ~w~n', [Source, Destination]).
+
+% Recursive case: Moving N disks
+move(N, Source, Destination, Auxiliary) :-
+    N > 1,
+    N1 is N - 1,
+    move(N1, Source, Auxiliary, Destination),
+    move(1, Source, Destination, _),
+    move(N1, Auxiliary, Destination, Source).
