@@ -1,0 +1,17 @@
+% Initial state: Monkey is at position X, Chair is at Y, and Bananas are at position B
+state(monkey(X), chair(Y), bananas(B), has_not).
+
+% Actions: Moving, Climbing, Grabbing
+move(monkey(X), monkey(X1)) :- X \= X1.
+push(chair(Y), chair(Y1)) :- Y \= Y1.
+climb(monkey(X), chair(X)) :- true.
+grab_bananas(state(monkey(X), chair(X), bananas(X), has_not), state(monkey(X), chair(X), bananas(X), has)).
+
+% Solving the problem: Sequence of actions for monkey to get bananas
+solve :-
+    state(monkey(1), chair(2), bananas(3), has_not),
+    push(chair(2), chair(3)),
+    move(monkey(1), monkey(3)),
+    climb(monkey(3), chair(3)),
+    grab_bananas(state(monkey(3), chair(3), bananas(3), has_not), state(monkey(3), chair(3), bananas(3), has)),
+    write('Monkey has the bananas!').
