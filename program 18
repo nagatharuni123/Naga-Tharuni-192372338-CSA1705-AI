@@ -1,0 +1,9 @@
+% Facts: Storing name and DOB
+person('Alice', date(1995, 6, 15)).
+person('Bob', date(1990, 12, 3)).
+person('Charlie', date(2000, 1, 25)).
+person('David', date(1988, 9, 10)).
+
+% Rule to retrieve DOB given a name
+get_dob(Name, DOB) :-
+    person(Name, DOB).
