@@ -1,0 +1,17 @@
+% Facts: Diseases and their associated symptoms
+disease(flu, [fever, cough, sore_throat, body_ache]).
+disease(cold, [cough, sneezing, runny_nose]).
+disease(malaria, [fever, chills, sweating, headache]).
+disease(diabetes, [excessive_thirst, frequent_urination, fatigue]).
+disease(hypertension, [high_blood_pressure, dizziness, headache]).
+
+% Rule to diagnose a disease based on symptoms
+diagnose(Symptoms, Disease) :-
+    disease(Disease, DiseaseSymptoms),
+    subset(Symptoms, DiseaseSymptoms).
+
+% Helper function: Check if one list is a subset of another
+subset([], _).
+subset([H|T], List) :-
+    member(H, List),
+    subset(T, List).
