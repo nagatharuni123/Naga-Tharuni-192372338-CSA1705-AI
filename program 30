@@ -1,0 +1,24 @@
+% Facts: Known conditions
+fact(has_fever).
+fact(has_cough).
+fact(has_sore_throat).
+
+% Rules: Define disease diagnosis using backward reasoning
+disease(flu) :-
+    fact(has_fever),
+    fact(has_cough),
+    fact(has_sore_throat).
+
+disease(cold) :-
+    fact(has_cough),
+    fact(has_sore_throat).
+
+disease(malaria) :-
+    fact(has_fever),
+    fact(has_chills),
+    fact(has_headache).
+
+% Backward chaining query to check disease
+diagnose(Disease) :-
+    disease(Disease),
+    format('Based on symptoms, the diagnosed disease is: ~w~n', [Disease]).
