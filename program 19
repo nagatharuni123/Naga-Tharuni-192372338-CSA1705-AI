@@ -1,0 +1,20 @@
+% Facts: Defining which teacher teaches which subject and student enrollment
+teacher('Alice', 'CS101').
+teacher('Bob', 'MATH202').
+teacher('Charlie', 'PHY303').
+
+student('David', 'CS101').
+student('Emma', 'MATH202').
+student('Frank', 'PHY303').
+student('Grace', 'CS101').
+student('Henry', 'MATH202').
+
+% Rule to find the teacher of a specific student
+find_teacher(Student, Teacher) :-
+    student(Student, Subject),
+    teacher(Teacher, Subject).
+
+% Rule to list all students under a specific teacher
+students_under_teacher(Teacher, Student) :-
+    teacher(Teacher, Subject),
+    student(Student, Subject).
