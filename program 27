@@ -1,0 +1,42 @@
+% Facts: Define edges with costs
+edge(a, b, 4).
+edge(a, c, 3).
+edge(b, d, 5).
+edge(c, d, 2).
+edge(c, e, 6).
+edge(d, f, 4).
+edge(e, f, 5).
+
+% Heuristic function: Estimated cost to goal
+heuristic(a, 7).
+heuristic(b, 6).
+heuristic(c, 4).
+heuristic(d, 2).
+heuristic(e, 5).
+heuristic(f, 0).  % Goal node
+
+% Best First Search Algorithm
+best_first_search(Start, Goal, Path) :-
+    bfs([[Start]], Goal, Path).
+
+% Base Case: If the first path in queue reaches the goal, return the path
+bfs([[Goal | Rest] | _], Goal, [Goal | Rest]).
+
+% Recursive Case: Expand the best path and sort by heuristic value
+bfs([[Node | Path] | OtherPaths], Goal, FinalPath) :-
+    findall([Next, Node | Path], (edge(Node, Next, _), \+ member(Next, Path)), NewPaths),
+    append(OtherPaths, NewPaths, UpdatedPaths),
+    sort_by_heuristic(UpdatedPaths, SortedPaths),
+    bfs(SortedPaths, Goal, FinalPath).
+
+% Sort paths by heuristic (choosing the most promising node first)
+sort_by_heuristic(Paths, Sorted) :-
+    maplist(evaluate_path, Paths, Evaluated),
+    sort(1, @=<, Evaluated, SortedPairs),
+    pairs_values(SortedPairs, Sorted).
+
+evaluate_path([Node | Path], heuristic(Node)-[Node | Path]) :-
+    heuristic(Node, H).
+
+pairs_values([], []).
+pairs_values([_-V | T], [V | VT]) :- pairs_values(T, VT).
