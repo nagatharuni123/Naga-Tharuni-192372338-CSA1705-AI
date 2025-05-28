@@ -1,0 +1,27 @@
+% Facts: Define planets with their properties
+planet('Mercury', rocky, 57.9, 4879).
+planet('Venus', rocky, 108.2, 12104).
+planet('Earth', rocky, 149.6, 12742).
+planet('Mars', rocky, 227.9, 6779).
+planet('Jupiter', gas_giant, 778.3, 139820).
+planet('Saturn', gas_giant, 1427, 116460).
+planet('Uranus', ice_giant, 2871, 50724).
+planet('Neptune', ice_giant, 4497, 49244).
+
+% Rule to find planet type
+planet_type(Name, Type) :-
+    planet(Name, Type, _, _).
+
+% Rule to find distance from the sun
+distance_from_sun(Name, Distance) :-
+    planet(Name, _, Distance, _).
+
+% Rule to find planet with largest diameter
+largest_planet(Name) :-
+    planet(Name, _, _, Diameter),
+    \+ (planet(_, _, _, D), D > Diameter).
+
+% Rule to find planets closer than a certain distance
+closer_than(Distance, Name) :-
+    planet(Name, _, D, _),
+    D < Distance.
